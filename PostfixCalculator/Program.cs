@@ -66,7 +66,47 @@ public class Program
     /// <returns>The value of the expression, or null if it cannot be evaluated.</returns>
     public static double? Evaluate(string s)
     {
+        Stack<double> stack = new Stack<double>();
+
+        foreach(var character in s.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries))
+        {
+            if (character == "+" || character == "-" || character == "*" || character == "/")
+            {
+                if (stack.Count < 2)
+                {
+                    return null;
+                }
+
+                var char1 = stack.Pop();
+                var char2 = stack.Pop();
+                
+                if (character == "+")
+                {
+                    stack.Push(char2 + char1);
+                }
+                else if (character == "-")
+                {
+                    stack.Push(char2 - char1);
+                }
+                else if (character == "*")
+                {
+                    stack.Push(char2 * char1);
+                }
+                else if (character == "/")
+                {
+                    stack.Push(char2 / char1);
+                }
+            }
+            else
+            {
+                stack.Push(double.Parse(character));
+            }
+        }
+        if (stack.Count == 1)
+        {
+            return stack.Pop();
+        }
+
         return null;
     }
 }
-

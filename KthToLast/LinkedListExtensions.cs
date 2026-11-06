@@ -29,9 +29,23 @@ namespace KthToLast
 		/// before the end. For a list of 5 elements, valid k values are 0 through 4.
 		/// An empty list has no valid k values.
 		/// </exception>
+
 		public static T KthToLastSinglyLinked<T>(this LinkedList<T> linkedList, int k)
 		{
-			return default;
+			if(k < 0 || k > linkedList.Count - 1 || linkedList.Count == 0)
+			{
+				throw new IndexOutOfRangeException();
+			}
+
+			int nodesToMove = linkedList.Count - (1+k);
+			LinkedListNode<T> currentNode = linkedList.First!;
+			while (nodesToMove > 0)
+			{
+				currentNode = currentNode.Next!;
+				nodesToMove--;
+			}
+			
+			return currentNode.Value;
 		}
 
         /// <summary>
@@ -60,10 +74,22 @@ namespace KthToLast
         /// before the end. For a list of 5 elements, valid k values are 0 through 4.
         /// An empty list has no valid k values.
         /// </exception>
+
         public static T KthToLastDoublyLinked<T>(this LinkedList<T> linkedList, int k)
         {
-			return default;
+			if(k < 0 || k > linkedList.Count - 1 || linkedList.Count == 0)
+			{
+				throw new IndexOutOfRangeException();
+			}
+
+			var currentNode = linkedList.Last;
+			while(k > 0)
+			{
+				currentNode = currentNode?.Previous;
+				k--;
+			}
+
+			return currentNode.Value;
         }
     }
 }
-
